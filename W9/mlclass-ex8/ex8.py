@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # python adaptation of solved ex8.m
-# 
+#
 
 #  Anomaly Detection and Collaborative Filtering
 #
@@ -47,15 +47,15 @@ plt.xlabel('Latency (ms)')
 plt.ylabel('Throughput (mb/s)')
 plt.show(block=False)
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 
 ## ================== Part 2: Estimate the dataset statistics ===================
 #  For this exercise, we assume a Gaussian distribution for the dataset.
 #
-#  We first estimate the parameters of our assumed Gaussian distribution, 
-#  then compute the probabilities for each of the points and then visualize 
-#  both the overall distribution and where each of the points falls in 
+#  We first estimate the parameters of our assumed Gaussian distribution,
+#  then compute the probabilities for each of the points and then visualize
+#  both the overall distribution and where each of the points falls in
 #  terms of that distribution.
 #
 print('Visualizing Gaussian fit.\n')
@@ -63,7 +63,7 @@ print('Visualizing Gaussian fit.\n')
 #  Estimate my and sigma2
 mu, sigma2 = eg.estimateGaussian(X)
 
-#  Returns the density of the multivariate normal at each data point (row) 
+#  Returns the density of the multivariate normal at each data point (row)
 #  of X
 p = mvg.multivariateGaussian(X, mu, sigma2)
 
@@ -74,12 +74,12 @@ plt.xlabel('Latency (ms)')
 plt.ylabel('Throughput (mb/s)')
 plt.show(block=False)
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 ## ================== Part 3: Find Outliers ===================
 #  Now you will find a good epsilon threshold using a cross-validation set
 #  probabilities given the estimated Gaussian distribution
-# 
+#
 
 pval = mvg.multivariateGaussian(Xval, mu, sigma2)
 
@@ -101,11 +101,11 @@ plt.plot(X[outliers, 0], X[outliers, 1], 'ro', linewidth=2, markersize=18, fills
 plt.hold(False)
 plt.show(block=False)
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 ## ================== Part 4: Multidimensional Outliers ===================
-#  We will now use the code from the previous part and apply it to a 
-#  harder problem in which more features describe each datapoint and only 
+#  We will now use the code from the previous part and apply it to a
+#  harder problem in which more features describe each datapoint and only
 #  some features indicate whether a point is an outlier.
 #
 
@@ -119,7 +119,7 @@ yval = mat["yval"].flatten()
 #  Apply the same steps to the larger dataset
 mu, sigma2 = eg.estimateGaussian(X)
 
-#  Training set 
+#  Training set
 p = mvg.multivariateGaussian(X, mu, sigma2)
 
 #  Cross-validation set
@@ -131,6 +131,4 @@ epsilon, F1 = st.selectThreshold(yval, pval)
 print('Best epsilon found using cross-validation: {:e}'.format(epsilon))
 print('Best F1 on Cross Validation Set:  {:f}'.format(F1))
 print('# Outliers found: {:d}'.format(np.sum((p < epsilon).astype(int))))
-raw_input('   (you should see a value epsilon of about 1.38e-18)\n')
-
-
+input('   (you should see a value epsilon of about 1.38e-18)\n')

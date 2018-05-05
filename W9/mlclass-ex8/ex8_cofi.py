@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # python adaptation of solved ex8_cofi.m
-# 
+#
 
 #  Anomaly Detection and Collaborative Filtering
 #
@@ -26,7 +26,7 @@ import normalizeRatings as nr
 ## =============== Part 1: Loading movie ratings dataset ================
 #  You will start by loading the movie ratings dataset to understand the
 #  structure of the data.
-#  
+#
 print('Loading movie ratings dataset.\n')
 
 #  Load data
@@ -34,7 +34,7 @@ mat = scipy.io.loadmat('ex8_movies.mat')
 Y = mat["Y"]
 R = mat["R"]
 
-#  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies on 
+#  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies on
 #  943 users
 #
 #  R is a 1682x943 matrix, where R(i,j) = 1 if and only if user j gave a
@@ -45,17 +45,17 @@ print('Average rating for movie 1 (Toy Story): {:f} / 5\n'.format(np.mean(Y[0, R
 
 #  We can "visualize" the ratings matrix by plotting it with imagesc
 # need aspect='auto' for a ~16:9 (vs almost vertical) aspect
-plt.imshow(Y, aspect='auto') 
+plt.imshow(Y, aspect='auto')
 plt.ylabel('Movies')
 plt.xlabel('Users')
 plt.show(block=False)
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 ## ============ Part 2: Collaborative Filtering Cost Function ===========
 #  You will now implement the cost function for collaborative filtering.
 #  To help you debug your cost function, we have included set of weights
-#  that we trained on that. Specifically, you should complete the code in 
+#  that we trained on that. Specifically, you should complete the code in
 #  cofiCostFunc.m to return J.
 
 #  Load pre-trained weights (X, Theta, num_users, num_movies, num_features)
@@ -67,8 +67,8 @@ num_movies = mat["num_movies"]
 num_features = mat["num_features"]
 
 #  Reduce the data set size so that this runs faster
-num_users = 4 
-num_movies = 5 
+num_users = 4
+num_movies = 5
 num_features = 3
 X = X[:num_movies, :num_features]
 Theta = Theta[:num_users, :num_features]
@@ -78,53 +78,53 @@ R = R[:num_movies, :num_users]
 #  Evaluate cost function
 params = np.concatenate((X.reshape(X.size, order='F'), Theta.reshape(Theta.size, order='F')))
 J, _ = ccf.cofiCostFunc(params, Y, R, num_users, num_movies, num_features, 0)
-           
+
 print('Cost at loaded parameters: {:f}\n(this value should be about 22.22)\n'.format(J))
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 
 ## ============== Part 3: Collaborative Filtering Gradient ==============
-#  Once your cost function matches up with ours, you should now implement 
-#  the collaborative filtering gradient function. Specifically, you should 
+#  Once your cost function matches up with ours, you should now implement
+#  the collaborative filtering gradient function. Specifically, you should
 #  complete the code in cofiCostFunc.m to return the grad argument.
-#  
+#
 print('\nChecking Gradients (without regularization) ... \n')
 
 #  Check gradients by running checkNNGradients
 chcf.checkCostFunction()
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 
 ## ========= Part 4: Collaborative Filtering Cost Regularization ========
-#  Now, you should implement regularization for the cost function for 
+#  Now, you should implement regularization for the cost function for
 #  collaborative filtering. You can implement it by adding the cost of
 #  regularization to the original cost computation.
-#  
+#
 
 #  Evaluate cost function
 params = np.concatenate((X.reshape(X.size, order='F'), Theta.reshape(Theta.size, order='F')))
 J, _ = ccf.cofiCostFunc(params, Y, R, num_users, num_movies, num_features, 1.5)
-           
+
 print('Cost at loaded parameters (lambda_var = 1.5): {:f} '\
          '\n(this value should be about 31.34)\n'.format(J))
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 
 ## ======= Part 5: Collaborative Filtering Gradient Regularization ======
-#  Once your cost matches up with ours, you should proceed to implement 
-#  regularization for the gradient. 
+#  Once your cost matches up with ours, you should proceed to implement
+#  regularization for the gradient.
 #
 
-#  
+#
 print('\nChecking Gradients (with regularization) ... \n')
 
 #  Check gradients by running checkNNGradients
 chcf.checkCostFunction(1.5)
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 
 ## ============== Part 6: Entering ratings for a new user ===============
@@ -164,15 +164,15 @@ my_ratings[225] = 3
 
 print('\n\nNew user ratings:\n')
 for i, rating in enumerate(my_ratings):
-    if rating > 0: 
+    if rating > 0:
         print('Rated {:.0f} for {:s}\n'.format(rating[0], movieList[i]))
 
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 
 ## ================== Part 7: Learning Movie Ratings ====================
-#  Now, you will train the collaborative filtering model on a movie rating 
+#  Now, you will train the collaborative filtering model on a movie rating
 #  dataset of 1682 movies and 943 users
 #
 
@@ -183,7 +183,7 @@ mat = scipy.io.loadmat('ex8_movies.mat')
 Y = mat["Y"]
 R = mat["R"]
 
-#  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies by 
+#  Y is a 1682x943 matrix, containing ratings (1-5) of 1682 movies by
 #  943 users
 #
 #  R is a 1682x943 matrix, where R(i,j) = 1 if and only if user j gave a
@@ -226,7 +226,7 @@ Theta = np.reshape(theta[num_movies*num_features:], (num_users, num_features), o
 
 print('Recommender system learning completed.\n')
 
-raw_input('Program paused. Press enter to continue.')
+input('Program paused. Press enter to continue.')
 
 ## ================== Part 8: Recommendation for you ====================
 #  After training the model, you can now make recommendations by computing
@@ -243,11 +243,11 @@ movieList = lml.loadMovieList()
 ix = my_predictions.argsort()[::-1]
 
 print('\n\nTop recommendations for you:\n')
-for i in xrange(10):
+for i in range(10):
     j = ix[i]
     print('Predicting rating {:.5f} for movie {:s}'.format(my_predictions[j], movieList[j]))
 
 print('\n\nOriginal ratings provided:')
-for i in xrange(len(my_ratings)):
+for i in range(len(my_ratings)):
     if my_ratings[i] > 0:
         print('Rated {:d} for {:s}'.format(int(my_ratings[i]), movieList[i]))
